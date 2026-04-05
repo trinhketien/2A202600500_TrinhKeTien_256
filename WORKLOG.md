@@ -13,7 +13,7 @@ Ghi lại các quyết định kỹ thuật, phân công, và brainstorming củ
 
 ### [ADR-1] Thành lập nhóm mới 021 — 04/04/2026
 
-**Bối cảnh:** Nhóm ban đầu của Tiến (A20-App-167) bị biến động — 2 thành viên xin rời sang nhóm khác sau buổi lab Day 01.
+**Bối cảnh:** Nhóm ban đầu của Tiến, Hiệp, Phú bị biến động
 
 **Tình trạng:**
 - Thành viên mới: Trịnh Kế Tiến, Hồ Xuân Phú, Phạm Hữu Hoàng Hiệp
@@ -95,13 +95,8 @@ Lý do:
 **Kết luận:** Chọn Cố Vấn Khởi Nghiệp AI. Đã viết đề xuất chi tiết + thiết kế hệ thống + kế hoạch 5 tuần.
 
 
----
-
-<!-- Thêm entry mới xuống dưới -->
 
 ---
-
-## Ví dụ
 
 <details>
 <summary>Xem ví dụ mẫu (click để mở)</summary>
