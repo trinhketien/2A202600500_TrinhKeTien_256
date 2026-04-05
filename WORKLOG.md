@@ -10,75 +10,113 @@ Ghi lại các quyết định kỹ thuật, phân công, và brainstorming củ
 
 ### Quyết định kỹ thuật
 
-```markdown
-### [ADR-N] Tiêu đề quyết định — DD/MM/YYYY
 
-**Bối cảnh:** Vấn đề cần giải quyết là gì?
+### [ADR-1] Thành lập nhóm mới 021 — 04/04/2026
+
+**Bối cảnh:** Nhóm ban đầu của Tiến (A20-App-167) bị biến động — 2 thành viên xin rời sang nhóm khác sau buổi lab Day 01.
+
+**Tình trạng:**
+- Thành viên mới: Trịnh Kế Tiến, Hồ Xuân Phú, Phạm Hữu Hoàng Hiệp
+- Chuyển sang repo nhóm 021 (A20-App-021)
+
+**Quyết định:** Thành lập nhóm 021 với 3 thành viên mới, bắt đầu từ 04/04/2026.
+
+**Hệ quả:** Cần chốt lại đề tài từ đầu vì mỗi người đã có đề xuất riêng. Mất 1-2 ngày để thống nhất phương án.
+
+---
+
+### [ADR-2] Chốt đề tài: Cố Vấn Khởi Nghiệp AI — 05/04/2026
+
+**Bối cảnh:** Nhóm cần chọn 1 đề tài dự án cuối khóa từ 6 phương án do 3 thành viên đề xuất.
 
 **Các lựa chọn đã xem xét:**
-- Option A: ...
-- Option B: ...
+- **HX.Phú:** Đề xuất 078, 090
+- **PHH.Hiệp:** Đề xuất 031, 134
+- **TK.Tiến:** Đề xuất 066, 080, Cố Vấn Khởi Nghiệp AI
 
-**Quyết định:** Chọn option nào và tại sao.
+**Quá trình:**
+1. Deep Research phân tích 250 dự án trong ngân hàng đề tài
+2. Deep Research phân tích 28 dự án Multi-Agent
+3. Phân tích và trao đổi sơ bộ 7 phương án
+4. So sánh khả năng triển khai trong 5 tuần với 3 người
+5. Đánh giá tính khác biệt so với 252 đề tài hiện có
+6. Đề tài thống nhất 066 nhưng không còn chỗ trống.
+7. Nhóm thống nhất cao, tìm phương án mới đề xuất.
 
-**Hệ quả:** Những gì bị ảnh hưởng / trade-off.
-```
+**Quyết định:** Chọn đề tài mới — **Cố Vấn Khởi Nghiệp AI** (Multi-Agent Debate System).
+Hệ thống 5 AI agents phản biện ý tưởng kinh doanh từ 5 góc nhìn (Chiến Lược, Kỹ Thuật, Thị Trường, Tài Chính, Pháp Lý) — người dùng chỉ cần nhập ý tưởng.
+Lý do:
+- **Vấn đề thật:** 57.400 DN mới/quý — phần lớn thất bại vì thiếu phản biện, bỏ qua rủi ro pháp lý và thiếu đánh giá tài chính
+- **General AI chưa đủ:** Đòi hỏi biết viết prompt, biết hỏi đúng câu, tự tổng hợp — founder lần đầu thiếu hoàn toàn kỹ năng này
+- **Không trùng:** Không đề nào trong 252 đề có agents tranh luận visible trên UI
+- **Khác biệt kỹ thuật:** 5 agents phản biện chéo + Moderator chống echo chamber + Mem0 nhớ xuyên phiên + RAG pháp lý VN cite NĐ cụ thể
+- **Scope phù hợp:** 3 người, 5 tuần, có số liệu thị trường và bản thiết kế hệ thống chi tiết
 
-### Phân công
+**Hệ quả:**
+- Cần học LangGraph, Mem0 (công nghệ mới với team)
+- Tech stack: LangGraph + Mem0 + FastAPI + Next.js + PostgreSQL + ChromaDB
+- Phân công sơ bộ: Backend (1 người) / AI Agents (1 người) / Frontend (1 người)
 
-```markdown
-### Sprint N — DD/MM → DD/MM/YYYY
+---
+
+### Sprint 0 — 03/04 → 05/04/2026
 
 | Task | Người làm | Deadline | Trạng thái |
 |---|---|---|---|
-| | | | |
-```
+| Tìm và chốt thành viên nhóm mới | Cả nhóm | 04/04 | ✅ Xong — nhóm 021 |
+| Deep Research phân tích 250 dự án | Cả nhóm | 04/04 | ✅ Xong |
+| Deep Research phân tích 28 dự án Multi-Agent | Cả nhóm | 04/04 | ✅ Xong |
+| Phân tích + trao đổi 6 phương án đề tài | Cả nhóm | 04/04 | ✅ Xong |
+| Chốt đề tài dự án | Cả nhóm | 05/04 | ✅ Xong — Cố Vấn Khởi Nghiệp AI |
+| Viết đề xuất dự án chi tiết | Cả nhóm | 05/04 | ✅ Xong |
+| Lên kế hoạch triển khai 5 tuần | Cả nhóm | 05/04 | ✅ Xong |
 
-### Brainstorming
+---
 
-```markdown
-### Brainstorm: [Chủ đề] — DD/MM/YYYY
+### Brainstorm: Chọn đề tài dự án — 04/04–05/04/2026
 
-**Câu hỏi:** ...
+**Câu hỏi:** Nên chọn đề tài nào cho dự án Multi-Agent?
 
 **Các ý tưởng:**
-- Ý tưởng 1: ...
-- Ý tưởng 2: ...
+- **HX.Phú:** Đề xuất 078, 090
+- **PHH.Hiệp:** Đề xuất 031, 134
+- **TK.Tiến:** Đề xuất 066, 080, Cố Vấn Khởi Nghiệp AI (phương án mới bổ sung)
 
-**Kết luận:** ...
-```
+**Phân tích:**
+- Deep Research 250 đề tài → xác định 28 đề Multi-Agent → Lựa chọn 06 phương án, sau trao đổi thống nhất cao lựa chọn 066 nhưng hết slot nên nhóm thống nhất đề xuất phương án mới.
+
+**Lý do chọn Cố Vấn Khởi Nghiệp AI:**
+- **Vấn đề thật:** 57.400 DN mới/quý, phần lớn thất bại vì thiếu phản biện trước khi đầu tư — đặc biệt bỏ qua rủi ro pháp lý và thiếu đánh giá tài chính
+- **General AI chưa đủ:** Đòi hỏi người dùng biết viết prompt, biết hỏi đúng câu, tự tổng hợp — founder lần đầu khởi nghiệp thiếu hoàn toàn kỹ năng này
+- **Không trùng:** Không đề nào trong 252 đề có agents tranh luận visible trên UI
+- **Khác biệt kỹ thuật:** 5 agents phản biện chéo + Moderator chống echo chamber + Mem0 nhớ xuyên phiên + RAG pháp lý VN (cite NĐ cụ thể)
+- **Scope phù hợp:** 3 người, 5 tuần, có bản thiết kế hệ thống chi tiết
+
+**Kết luận:** Chọn Cố Vấn Khởi Nghiệp AI. Đã viết đề xuất chi tiết + thiết kế hệ thống + kế hoạch 5 tuần.
+
+
+---
+
+<!-- Thêm entry mới xuống dưới -->
 
 ---
 
 ## Ví dụ
 
+<details>
+<summary>Xem ví dụ mẫu (click để mở)</summary>
+
 ### [ADR-1] Dùng TypeScript thay vì Python — 30/03/2026
 
-**Bối cảnh:** Cả nhóm cần chọn 1 ngôn ngữ chính để xây dựng agent. Có 2 thành viên quen Python, 1 thành viên quen TypeScript.
+**Bối cảnh:** Cả nhóm cần chọn 1 ngôn ngữ chính để xây dựng agent.
 
 **Các lựa chọn đã xem xét:**
-- **Python**: Ecosystem ML tốt hơn, syntax đơn giản, thành viên quen hơn.
-- **TypeScript**: Type safety, dễ refactor khi project lớn, nhiều library AI mới ra bản TS trước.
+- **Python**: Ecosystem ML tốt hơn, syntax đơn giản.
+- **TypeScript**: Type safety, dễ refactor khi project lớn.
 
-**Quyết định:** Chọn TypeScript vì project này focus vào agent architecture, không cần ML library nặng. Type safety sẽ giúp bắt lỗi sớm hơn khi codebase phình ra.
+**Quyết định:** Chọn TypeScript vì focus vào agent architecture, không cần ML library nặng.
 
-**Hệ quả:** 2 thành viên Python cần học TypeScript cơ bản (ước tính 1 tuần). Sẽ không dùng được `langchain` Python trực tiếp.
-
----
-
-### [ADR-2] Lưu conversation history bằng file JSON — 03/04/2026
-
-**Bối cảnh:** Agent cần nhớ context giữa các lần chạy. Cần chọn storage.
-
-**Các lựa chọn đã xem xét:**
-- **In-memory array**: Đơn giản nhất nhưng mất khi restart.
-- **File JSON**: Persistent, không cần setup, dễ inspect bằng tay.
-- **SQLite**: Có thể query, tốt cho production nhưng overkill cho prototype.
-- **Redis**: Fast nhưng cần chạy thêm service.
-
-**Quyết định:** File JSON cho giai đoạn prototype. Thiết kế interface `MemoryStore` để sau này swap sang SQLite không cần sửa logic agent.
-
-**Hệ quả:** Không query được theo thời gian hay user. Chấp nhận được ở giai đoạn này.
+**Hệ quả:** 2 thành viên Python cần học TypeScript cơ bản.
 
 ---
 
@@ -88,54 +126,13 @@ Ghi lại các quyết định kỹ thuật, phân công, và brainstorming củ
 |---|---|---|---|
 | Setup TypeScript project + CI | Văn A | 01/04 | ✅ Xong |
 | Implement agent loop cơ bản | Thị B | 02/04 | ✅ Xong |
-| Tool: `search_web` (Brave API) | Văn C | 03/04 | ✅ Xong |
-| Tool: `read_file`, `write_file` | Thị B | 05/04 | ✅ Xong |
-| Conversation memory (JSON) | Văn A | 06/04 | ✅ Xong |
-| README + setup docs | Văn C | 06/04 | ✅ Xong |
-
----
-
-### Sprint 2 — 07/04 → 13/04/2026
-
-| Task | Người làm | Deadline | Trạng thái |
-|---|---|---|---|
-| Fix infinite loop: thêm `max_iterations` | Thị B | 08/04 | 🔄 Đang làm |
-| Tool: `run_tests` (chạy pytest) | Văn C | 10/04 | ⏳ Chờ |
-| Sliding window memory | Văn A | 09/04 | ⏳ Chờ |
-| Demo prep + slides | Cả nhóm | 13/04 | ⏳ Chờ |
 
 ---
 
 ### Brainstorm: Tính năng cho demo — 05/04/2026
 
-**Câu hỏi:** Demo tuần tới nên show gì để ấn tượng nhất trong 5 phút?
+**Câu hỏi:** Demo tuần tới nên show gì?
 
-**Các ý tưởng:**
-- **Ý tưởng 1 (Văn A):** Cho agent đọc 1 file Python có bug, tự fix, rồi chạy test để verify. Trực quan, dễ hiểu.
-- **Ý tưởng 2 (Thị B):** Agent tự build 1 tính năng nhỏ từ mô tả bằng tiếng Việt. Show khả năng hiểu ngôn ngữ tự nhiên.
-- **Ý tưởng 3 (Văn C):** Agent review PR, comment vào từng dòng code có vấn đề. Gần với use case thực tế nhất.
+**Kết luận:** Chọn ý tưởng fix bug cho demo chính vì đảm bảo chạy được.
 
-**Pros/Cons:**
-| Ý tưởng | Pros | Cons |
-|---|---|---|
-| Fix bug | Dễ làm, chắc chắn chạy được | Ít "wow" hơn |
-| Build từ mô tả | Ấn tượng nhất | Có thể fail nếu prompt phức tạp |
-| Review PR | Thực tế, liên quan trực tiếp đến khóa học | Cần setup GitHub webhook |
-
-**Kết luận:** Chọn ý tưởng 1 (fix bug) cho demo chính vì đảm bảo. Nếu còn thời gian sẽ show thêm ý tưởng 2 như bonus.
-
----
-
-### Bug quan trọng: Tool call loop vô hạn — 04/04/2026
-
-**Triệu chứng:** Agent gọi `search_web` liên tục không dừng khi tool trả về lỗi network.
-
-**Root cause:** Không có stop condition khi tool raise exception. Agent nhận `"error": "timeout"` nhưng interpret là cần thử lại.
-
-**Fix:** Thêm 2 điều kiện dừng:
-1. `max_iterations = 10` — hard stop sau 10 vòng
-2. Nếu tool trả về lỗi 3 lần liên tiếp → dừng và báo user
-
-**Code thay đổi:** `src/agent.ts` lines 45-67
-
-**Học được:** Luôn thiết kế stop condition trước khi implement retry logic.
+</details>
