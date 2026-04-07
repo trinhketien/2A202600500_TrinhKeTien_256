@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { getToken, getUser, createDebateStream, createReplyStream } from "./lib/api";
+import { getToken, getUser, setUser, removeToken, getProfile, createDebateStream, createReplyStream } from "./lib/api";
 
 /* Thông tin các agents */
 const AGENTS = [
@@ -55,7 +55,21 @@ export default function HomePage() {
   const MAX_ROUNDS = tierLimits.max_rounds;
 
   useEffect(() => {
-    if (!getToken()) router.push("/login");
+    const token = getToken();
+    if (!token) {
+      router.push("/login");
+      return;
+    }
+    // Bug 3 fix: Sync tier mới nhất từ server (Stripe webhook / admin update)
+    getProfile(token)
+      .then((freshUser) => {
+        setUser(freshUser);
+      })
+      .catch(() => {
+        // Token expired → re-login
+        removeToken();
+        router.push("/login");
+      });
   }, []);
 
   /* Auto-scroll to bottom */
@@ -355,10 +369,30 @@ export default function HomePage() {
 
       {error && <div className="alert alert-error" style={{ maxWidth:700, margin:"0 auto 16px" }}>{error}</div>}
 
-      {/* Clarification card (Bước 6) */}
+      {/* Clarification card (Bước 6) — Bug 1 fix: thêm nút ✕ + "Quay lại sửa" */}
       {clarification && (
         <div className="debate-area">
-          <div className="clarification-card">
+          <div className="clarification-card" style={{ position: "relative" }}>
+            {/* Nút X đóng — KHÔNG bắt đầu debate, KHÔNG tốn quota */}
+            <button
+              className="btn btn-ghost"
+              onClick={() => {
+                setClarification(null);
+                setClarAnswers({});
+                setIsStreaming(false);
+                setResponses([]);
+                setSessionId(null);
+              }}
+              style={{
+                position: "absolute", top: 8, right: 8,
+                padding: "4px 10px", fontSize: "1.2rem",
+                fontWeight: "bold", lineHeight: 1,
+                borderRadius: "50%", minWidth: "unset",
+              }}
+              title="Đóng"
+            >
+              ✕
+            </button>
             <h3>🤔 Cần bổ sung thông tin</h3>
             <p style={{ fontSize: "0.88rem", color: "var(--text-secondary)", marginBottom: 16 }}>
               Ý tưởng cần thêm chi tiết để phân tích chính xác hơn:
@@ -375,9 +409,21 @@ export default function HomePage() {
               </div>
             ))}
             <div className="clarification-actions">
+              {/* Nút 1: Quay lại sửa — đóng popup, KHÔNG debate */}
+              <button className="btn btn-ghost" onClick={() => {
+                setClarification(null);
+                setClarAnswers({});
+                setIsStreaming(false);
+                setResponses([]);
+                setSessionId(null);
+              }}>
+                ← Quay lại sửa ý tưởng
+              </button>
+              {/* Nút 2: Bỏ qua — debate với idea gốc */}
               <button className="btn btn-ghost" onClick={() => { setClarification(null); startDebate(); }}>
                 Bỏ qua, phân tích luôn
               </button>
+              {/* Nút 3: Tiếp tục — debate với idea + answers */}
               <button className="btn btn-primary" onClick={submitClarification}>
                 Tiếp tục phân tích →
               </button>

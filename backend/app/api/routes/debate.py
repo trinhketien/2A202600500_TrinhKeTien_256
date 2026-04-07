@@ -209,6 +209,7 @@ async def stream_debate(
             session_count = db_save.query(DebateSession).filter(
                 DebateSession.user_id == user_id,
                 DebateSession.created_at >= first_of_month,
+                DebateSession.status.notin_(["needs_input"]),  # Không đếm phiên bị hủy/chờ
             ).count()
             if session_count >= limits["max_sessions_per_month"]:
                 yield {

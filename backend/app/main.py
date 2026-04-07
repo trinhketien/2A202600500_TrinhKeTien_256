@@ -25,10 +25,16 @@ app = FastAPI(
 # ── Fix #3: CORS Middleware ─────────────────────────────
 # CORS (Cross-Origin Resource Sharing): cho phép frontend
 # chạy trên domain khác (localhost:3000, Vercel) gọi API.
-
-# Dev: cho phép tất cả origin. Production: đổi thành domain cụ thể.
-# Ví dụ production: ["https://covankn.vercel.app", "https://covankn.ai"]
-ALLOWED_ORIGINS = ["*"]
+import os
+_frontend = os.getenv("FRONTEND_URL", "http://localhost:3000")
+ALLOWED_ORIGINS = [
+    _frontend,
+    "http://localhost:3000",        # Dev
+    "http://localhost:5173",        # Vite dev
+]
+# Nếu dev mode (không có FRONTEND_URL custom) → allow all
+if _frontend == "http://localhost:3000":
+    ALLOWED_ORIGINS = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
