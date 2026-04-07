@@ -1,0 +1,62 @@
+# Docker Compose — Cố Vấn Khởi Nghiệp AI
+# PostgreSQL 16 (database chính) + ChromaDB (vector store cho RAG pháp lý)
+# Chạy: docker compose up -d
+# Dừng: docker compose down
+# Xóa hết dữ liệu: docker compose down -v
+
+services:
+  # ── PostgreSQL 16 ──────────────────────────────────────────
+  # Database chính: lưu users, sessions, debate history
+  postgres:
+    image: postgres:16-alpine
+    container_name: covankn_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: covan_db
+      POSTGRES_USER: covan_user
+      POSTGRES_PASSWORD: covan_local_2026
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U covan_user -d covan_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ── ChromaDB ───────────────────────────────────────────────
+  # Vector database: lưu embeddings văn bản pháp lý VN (NĐ, Luật)
+  # Để Legal Agent tra cứu và cite chính xác
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: covankn_chroma
+    restart: unless-stopped
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    ports:
+      - "8100:8000"
+    volumes:
+      - chromadata:/chroma/chroma
+
+  # ── Redis 7 ─────────────────────────────────────────────
+  # Cache + rate limiting (SlowAPI storage backend)
+  redis:
+    image: redis:7-alpine
+    container_name: covankn_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  pgdata:
+  chromadata:
+  redisdata:

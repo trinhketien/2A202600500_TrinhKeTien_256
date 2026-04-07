@@ -1,0 +1,56 @@
+# === Cố Vấn Khởi Nghiệp AI — Backend Dependencies ===
+
+# Web framework
+fastapi>=0.135.0
+uvicorn[standard]>=0.44.0
+sse-starlette>=2.0.0
+
+# AI / LLM
+openai>=2.30.0
+langgraph>=1.1.0
+langchain>=1.2.0
+langchain-openai>=1.1.0
+
+# Vector store (RAG pháp lý)
+chromadb>=1.5.0
+
+# Long-term memory
+mem0ai>=1.0.0
+
+# Web search (Market Agent — DuckDuckGo, miễn phí)
+ddgs>=7.0.0
+
+# Search tools — SDK chính thức nhà cung cấp
+tavily-python>=0.5.0               # by Tavily Inc.
+google-search-results>=2.4.0       # by SerpAPI LLC
+pytrends>=4.9.0                    # Google Trends — community, miễn phí
+
+# PDF export (Bước 10 — headless Chromium)
+playwright>=1.40.0
+
+# Database
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
+alembic>=1.18.0
+
+# Auth
+python-jose[cryptography]>=3.3.0
+bcrypt>=4.0.0
+email-validator>=2.0.0
+
+# Utilities
+python-dotenv>=1.2.0
+httpx>=0.28.0
+pydantic>=2.12.0
+pydantic-settings>=2.0.0
+
+# Rate limiting
+slowapi>=0.1.9
+
+# Production services (code sẵn — kích hoạt khi có key)
+redis>=5.0.0
+stripe>=10.0.0
+boto3>=1.35.0
+resend>=2.0.0
+jinja2>=3.1.0
+google-auth>=2.0.0              # Google OAuth 2.0 token verification

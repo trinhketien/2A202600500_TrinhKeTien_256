@@ -1,0 +1,60 @@
+﻿
+=== 1. Health Check ===
+  [PASS] GET / â†’ 200
+  [PASS] Root health status=ok
+  [PASS] GET /api/health â†’ 200
+
+=== 2. Auth - Register ===
+  [PASS] POST /api/auth/register â†’ 409 (already exists)
+  [PASS] Fallback login â†’ 200
+  [PASS] Duplicate email â†’ 409
+  [PASS] Short password â†’ 422 (validation)
+
+=== 3. Auth - Login ===
+  [PASS] Admin login â†’ 200
+  [PASS] Admin has role=admin
+  [PASS] Login returns token_type=bearer
+  [PASS] Wrong password â†’ 401
+  [PASS] Non-existent email â†’ 401
+
+=== 4. Auth - Profile (JWT) ===
+  [PASS] GET /api/auth/me â†’ 200 (user)
+  [PASS] Profile returns correct email
+  [PASS] Profile has role field
+  [PASS] GET /api/auth/me â†’ 200 (admin)
+  [PASS] No token â†’ 401/403
+  [PASS] Invalid token â†’ 401
+
+=== 5. Admin Routes ===
+  [PASS] GET /api/admin/users â†’ 200
+  [PASS] Users is a list
+  [PASS] At least 1 user (admin)
+  [PASS] User â†’ admin route â†’ 403
+
+=== 6. Admin - Stats ===
+  [PASS] GET /api/admin/stats â†’ 200
+  [PASS] Stats has total_users
+  [PASS] Stats has total_sessions
+  [PASS] Stats has total_tokens_used
+  [PASS] total_users >= 1
+
+=== 7. Admin - Toggle Active ===
+  [PASS] PATCH toggle-active â†’ 200
+  [PASS] User is_active toggled (now=False)
+  [PASS] Toggle back â†’ 200
+  [PASS] User is_active restored
+
+=== 8. Debate Routes (no AI - just DB) ===
+  [PASS] GET /api/debate â†’ 200
+  [PASS] Debate sessions is list
+  [PASS] Debate no auth â†’ 401/403
+
+=== 9. Swagger UI ===
+  [PASS] GET /docs â†’ 200
+  [PASS] /docs has HTML content
+  [PASS] GET /openapi.json â†’ 200
+  [PASS] OpenAPI has 14 paths
+
+==================================================
+  RESULTS: 38 passed, 0 failed, 38 total
+==================================================

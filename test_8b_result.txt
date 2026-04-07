@@ -1,0 +1,69 @@
+﻿python.exe : D:\Antigravity\AI_thucchien\A20-Ap
+p-021\ai_engine\tools\web_search.py:33: 
+RuntimeWarning: This package 
+(`duckduckgo_search`) has been renamed to 
+`ddgs`! Use `pip install ddgs` instead.
+At line:1 char:1
++ & "d:\Antigravity\AI_thucchien\A20-App-021\ve
+nv\Scripts\python.exe" t ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (D 
+   :\Antigravity\... ddgs` instead.:String) [  
+  ], RemoteException
+    + FullyQualifiedErrorId : NativeCommandErr 
+   or
+ 
+  with DDGS(timeout=SEARCH_TIMEOUT) as ddgs:
+[Router] All search tools failed
+=======================================================
+TEST 1: Module imports
+  All imports: OK
+
+=======================================================
+TEST 2: Config keys
+  TAVILY_API_KEY: empty (OK for dev)
+  SERP_API_KEY: empty (OK for dev)
+  [PASS] Config OK
+
+=======================================================
+TEST 3: Adapters graceful fallback
+  Tavily (no key): [] OK
+  SerpAPI (no key): [] OK
+  SerpAPI Trends (no key): {} OK
+  [PASS] Graceful fallback OK
+
+=======================================================
+TEST 4: Search router waterfall
+  Results: 0, Tool: none
+  [PASS] Router OK
+
+=======================================================
+TEST 5: Report card parser
+  Overall: 7.5
+  Categories: {'market': 8.0, 'strategy': 7.0, 'finance': 6.5, 'technical': 8.5, 'legal': 7.0}
+  Recommendation: Go
+  Strengths: 2 items
+  Weaknesses: 2 items
+  Legal checklist: 5 items
+  [PASS] Report card parser OK
+
+=======================================================
+TEST 6: Trends format
+  [PASS] Trends format OK
+
+=======================================================
+Traceback (most recent call last):
+  File "D:\Antigravity\AI_thucchien\A20-App-021
+\test_8b_9.py", line 117, in <module>
+    print("ALL TESTS PASSED \u2705")
+  File "C:\Users\User\AppData\Local\Programs\Py
+thon\Python312\Lib\encodings\cp1258.py", line 
+19, in encode
+    return codecs.charmap_encode(input,self.err
+ors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't 
+encode character '\u2705' in position 17: 
+character maps to <undefined>

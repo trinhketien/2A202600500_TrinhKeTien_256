@@ -1,0 +1,100 @@
+╔════════════════════════════════════════════════════════╗
+║    TEST TOÀN DIỆN — Cố Vấn Khởi Nghiệp AI           ║
+║    A20-App-021 · QA Phase 2                          ║
+║    2026-04-08 02:10:34                          ║
+╚════════════════════════════════════════════════════════╝
+
+API: http://localhost:8000
+Test user: test_0b5915@covankn.ai
+
+✅ Server is running
+
+
+════════════════════════════════════════════════════════════
+NHÓM 1: Auth API
+════════════════════════════════════════════════════════════
+  ✅ [  1] Register happy path — token=eyJhbGciOiJIUzI1NiIs...
+  ✅ [  2] Register duplicate → 409 — code=409
+  ✅ [  3] Register short password → 422 — code=422
+  ✅ [  4] Register invalid email → 422 — code=422
+  ✅ [  5] Login happy path — token present, user.tier=free
+  ✅ [  6] Login wrong password → 401 — code=401
+  ✅ [  7] Login unknown email → 401 — code=401
+  ⏭️ [  8] Google user login → 400 — No Google user in DB
+  ✅ [  9] GET /me valid token — tier=free, auth_provider=email
+  ✅ [ 10] GET /me invalid token → 401 — code=401
+  ✅ [ 11] GET /me expired token → 401 — code=401
+  ✅ [ 12] Google OAuth no config → 503 — PASS
+
+════════════════════════════════════════════════════════════
+NHÓM 2: Debate API
+════════════════════════════════════════════════════════════
+  ✅ [ 13] Stream no token → error — code=422
+  ✅ [ 14] Stream valid → SSE starts — code=200, first=event: session
+  ✅ [ 15] List sessions → 200 — code=200
+  ✅ [ 16] Get invalid session → 404 — code=404
+  ✅ [ 17] PDF free user → 403/404 — code=403
+  ✅ [ 18] Report card invalid → 404/405 — code=404
+
+════════════════════════════════════════════════════════════
+NHÓM 3: Share API
+════════════════════════════════════════════════════════════
+  ✅ [ 21] Share free user → 403 — code=403 detail=Nâng cấp Pro hoặc Premium để sử dụng tính năng chia sẻ
+  ✅ [ 22] Get share invalid → 404 — code=404
+  ✅ [ 23] Delete share non-owner → 404 — code=404
+
+════════════════════════════════════════════════════════════
+NHÓM 4: Billing API
+════════════════════════════════════════════════════════════
+  ✅ [ 28] Billing status → 200 — tier=free, stripe=False
+  ✅ [ 29] Checkout no stripe → 503 — code=503
+  ✅ [ 30] Cancel → 503 (no stripe) — Stripe not configured
+
+════════════════════════════════════════════════════════════
+NHÓM 5: Admin API
+════════════════════════════════════════════════════════════
+  ✅ [ 31] Admin users list → 200 — code=200
+  ✅ [ 32] Normal user admin → 403 — code=403
+  ✅ [ 33] Admin stats → 200 — code=200
+
+════════════════════════════════════════════════════════════
+NHÓM 6: Security
+════════════════════════════════════════════════════════════
+  ⏭️ [ 61] Rate limit login — Would block subsequent tests
+  ⏭️ [ 62] Rate limit register — Would block subsequent tests
+  ✅ [ 63] JWT expired → 401 — code=401
+  ✅ [ 64] JWT tampered → 401 — code=401
+  ✅ [ 65] SQL injection safe — code=200
+  ✅ [ 66] XSS in idea safe — code=200
+  ✅ [ 68] No password in response — password fields absent
+  ✅ [ 72] Admin endpoint → 403 — code=403
+
+════════════════════════════════════════════════════════════
+NHÓM 7: Edge Cases
+════════════════════════════════════════════════════════════
+  ✅ [ 87] Unicode in idea — code=200
+  ✅ [ 88] Long idea (2000 chars) — code=200
+  ✅ [ 89] Empty industry — code=200
+  ⏭️ [ 91] Report card parse fallback — Requires full debate flow
+  ⏭️ [ 93] Share view_count increment — Requires existing share link
+  ⏭️ [ 95] Google user password block — No Google user in test DB
+
+════════════════════════════════════════════════════════════
+NHÓM 8: Database Integrity
+════════════════════════════════════════════════════════════
+  ✅ [106] Unique email constraint — code=409
+  ⏭️ [108] report_card TEXT→JSON — Needs completed session
+  ✅ [109] auth_provider default=email — auth_provider=email
+  ✅ [110] API health → ok — code=200
+
+════════════════════════════════════════════════════════════
+📊 KẾT QUẢ TEST TỔNG HỢP
+════════════════════════════════════════════════════════════
+  ✅ PASS: 38
+  ❌ FAIL: 0
+  ⏭️  SKIP: 7
+  📈 Total: 45
+  🎯 Pass rate: 38/38 = 100.0%
+
+🎉 ALL TESTS PASSED!
+
